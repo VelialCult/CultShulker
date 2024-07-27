@@ -1,0 +1,10 @@
+main: ru.velialcult.shulker.CultShulker
+api-version: 1.16
+version: '${project.version}'
+softdepend:
+  - CombatLogX
+name: CultShulker
+website: https://vk.com/velialcultstudio
+author: Nilsson03
+depend:
+  - CultLibrary
