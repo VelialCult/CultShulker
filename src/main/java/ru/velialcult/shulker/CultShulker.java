@@ -5,6 +5,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
 import ru.velialcult.library.bukkit.file.FileRepository;
 import ru.velialcult.library.bukkit.utils.ConfigurationUtil;
+import ru.velialcult.library.update.UpdateChecker;
 import ru.velialcult.shulker.file.ConfigFile;
 import ru.velialcult.shulker.handler.ShulkerHandler;
 import ru.velialcult.shulker.providers.ProvidersManager;
@@ -31,6 +32,9 @@ public class CultShulker extends JavaPlugin {
                 getLogger().severe("CultLibrary не найден, пожалуйста, установите его и попробуйте снова.");
                 Bukkit.getPluginManager().disablePlugin(this);
             }
+
+            UpdateChecker updateChecker = new UpdateChecker(this, "CultShulker");
+            updateChecker.check();
 
             providersManager  = new ProvidersManager(this);
             providersManager.load();
