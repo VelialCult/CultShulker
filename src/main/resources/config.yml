@@ -16,3 +16,4 @@ messages:
   fast-open-shulker:
     in-pvp: "&6➤ &fВы не можете открыть &6шалкер &fв режиме PvP"
     cant-click: "&6➤ &fНельзя перемещать &6шалкер&f, когда он открыт"
+    shulker-cant-pick-up: "&6➤ &fНельзя поднять шалкер в шалкер"

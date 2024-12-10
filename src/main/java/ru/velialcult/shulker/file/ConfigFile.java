@@ -3,6 +3,7 @@ package ru.velialcult.shulker.file;
 import com.cryptomorin.xseries.XMaterial;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
+import ru.velialcult.library.bukkit.utils.ConfigurationUtil;
 import ru.velialcult.library.core.VersionAdapter;
 import ru.velialcult.library.java.utils.TimeUtil;
 import ru.velialcult.shulker.CultShulker;
@@ -17,6 +18,7 @@ import java.util.stream.Collectors;
  */
 public class ConfigFile {
 
+    private final CultShulker plugin;
     private final FileConfiguration config;
 
     private List<Material> blackListItems;
@@ -28,12 +30,17 @@ public class ConfigFile {
     private String notifyMessage;
     private long periodSendInfoMessage;
     private String fastOpenShulkerMessageInPvP;
+    private String shulkerCantPickUp;
 
     public ConfigFile(CultShulker cultShulker) {
+        this.plugin = cultShulker;
         this.config = cultShulker.getConfig();
     }
 
     public void load() {
+
+        setDefault();
+
         this.blackListItems = config.getStringList("settings.shulker-inventory.black-list-items")
                 .stream()
                 .map(str -> XMaterial.matchXMaterial(str).orElseThrow( () -> new NoSuchElementException("No value present")).parseMaterial())
@@ -52,6 +59,17 @@ public class ConfigFile {
         this.periodSendInfoMessage = TimeUtil.parseStringToTime(config.getString("settings.shulker-inventory.message.period"));
         this.fastOpenShulkerMessageInPvP = VersionAdapter.TextUtil().colorize(config.getString("messages.fast-open-shulker.in-pvp"));
         this.openShulkerMessage = VersionAdapter.TextUtil().colorize(config.getString("messages.open-shulker.cant-click"));
+
+        this.shulkerCantPickUp = VersionAdapter.TextUtil().colorize(config.getString("messages.fast-open-shulker.shulker-cant-pick-up"));
+    }
+
+    private void setDefault() {
+        if (!config.contains("messages.fast-open-shulker.shulker-cant-pick-up")) {
+            config.set("messages.fast-open-shulker.shulker-cant-pick-up", "&6➤ &fНельзя поднять шалкер в шалкер");
+        }
+
+        ConfigurationUtil.saveFile(config, plugin.getDataFolder().getAbsolutePath(), "config.yml");
+        ConfigurationUtil.reloadFile(plugin, "inventories.yml");
     }
 
     public String getOpenShulkerMessage() {
@@ -88,5 +106,9 @@ public class ConfigFile {
 
     public String getFastOpenShulkerMessageInPvP() {
         return fastOpenShulkerMessageInPvP;
+    }
+
+    public String getShulkerCantPickUp() {
+        return shulkerCantPickUp;
     }
 }
