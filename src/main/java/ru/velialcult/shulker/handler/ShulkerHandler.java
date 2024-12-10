@@ -84,6 +84,14 @@ public class ShulkerHandler implements Listener {
                         return;
                     }
 
+                    if (itemStack.getType().toString().endsWith("SHULKER_BOX")) {
+                        if (configFile.isUseNotify()) {
+                            notificationService.sendMessage(player.getUniqueId(), "shulker-pickup", configFile.getPeriodSendInfoMessage(), () -> {
+                                VersionAdapter.MessageUtils().sendMessage(player, configFile.getShulkerCantPickUp());
+                            });
+                        }
+                    }
+
                     for (ItemStack shulker : inventoryContents) {
                         if (shulker == null || !configFile.getWhileListShulkers().contains(shulker.getType())) {
                             continue;
