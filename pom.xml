@@ -6,7 +6,7 @@
 
     <groupId>org.example</groupId>
     <artifactId>CultShulker</artifactId>
-    <version>1.0.1.5-DUPE-FIX</version>
+    <version>1.0.1.6-DUPE-FIX</version>
 
     <properties>
         <java.version>11</java.version>
